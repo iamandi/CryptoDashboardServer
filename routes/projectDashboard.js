@@ -4,11 +4,12 @@ const admin = require('../middleware/admin');
 const express = require('express');
 const router = express.Router();
 
-router.get('/', auth, (req, res) => {
+router.get('/', auth, async (req, res) => {
   res.send(projectDashboardAppDB.widgets);
 });
 
-router.get('/:id', auth, (req, res) => {
+router.get('/:id', auth, async (req, res) => {
+  console.log(res.header());
   res.send(projectDashboardAppDB.widgets);
 });
 
