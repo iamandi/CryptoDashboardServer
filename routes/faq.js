@@ -1,8 +1,9 @@
-const faqDB = require('../db/faq-db');
-const express = require('express');
+const faqDB = require("../db/faq-db");
+const auth = require("../middleware/auth");
+const express = require("express");
 const router = express.Router();
 
-router.get('/', (req, res) => {
+router.get("/", auth, async (req, res) => {
   res.send(faqDB);
 });
 

@@ -1,14 +1,14 @@
-const affiliateProgramDB = require('../db/affiliate-program-db');
-const express = require('express');
+const affiliateProgramDB = require("../db/affiliate-program-db");
+const auth = require("../middleware/auth");
+const express = require("express");
 const router = express.Router();
 
-router.get('/projects', async (req, res) => {
+router.get("/projects", auth, async (req, res) => {
   res.send(affiliateProgramDB.projects);
 });
 
-router.get('/referrals', async (req, res) => {
+router.get("/referrals", auth, async (req, res) => {
   res.send(affiliateProgramDB.referrals);
 });
-
 
 module.exports = router;
