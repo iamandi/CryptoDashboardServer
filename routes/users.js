@@ -10,15 +10,15 @@ const router = express.Router();
 
 router.get("/me", auth, async (req, res) => {
   const userFrmDb = await User.findById(req.user._id).select("-password");
+  const role = userFrmDb.isAdmin ? "admin" : "staff";
 
   const user = {
     _id: userFrmDb._id,
     email: userFrmDb.email,
-    displayName: userFrmDb.name,
-    role: "staff",
-    data: {
-      photoURL: "assets/images/avatars/Arnold.jpg"
-    }
+    firstname: userFrmDb.firstname,
+    lastname: userFrmDb.lastname,
+    role,
+    data: userFrmDb.data
   };
 
   res.send(user);
@@ -33,7 +33,9 @@ router.post("/", async (req, res) => {
   });
   if (user) return res.status(400).send("User already registered");
 
-  user = new User(_.pick(req.body, ["name", "email", "password"]));
+  user = new User(
+    _.pick(req.body, ["firstname", "lastname", "email", "password", "data"])
+  );
   const salt = await bcrypt.genSalt(10);
   user.password = await bcrypt.hash(user.password, salt);
   await user.save();
@@ -41,7 +43,7 @@ router.post("/", async (req, res) => {
   const token = user.generateAuthToken();
   res
     .header("x-auth-token", token)
-    .send(_.pick(user, ["_id", "name", "email"]));
+    .send(_.pick(user, ["_id", "firstname", "lastname", "email", "data"]));
 });
 
 module.exports = router;

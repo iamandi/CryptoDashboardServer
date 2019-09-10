@@ -4,10 +4,16 @@ const config = require("config");
 const jwt = require("jsonwebtoken");
 
 const userSchema = new mongoose.Schema({
-  name: {
+  firstname: {
     type: String,
     required: true,
-    minlength: 5,
+    minlength: 2,
+    maxlength: 255
+  },
+  lastname: {
+    type: String,
+    required: true,
+    minlength: 2,
     maxlength: 255
   },
   email: {
@@ -23,7 +29,15 @@ const userSchema = new mongoose.Schema({
     minlength: 5,
     maxlength: 1024
   },
-  isAdmin: Boolean
+  isAdmin: Boolean,
+  data: {
+    photoURL: {
+      type: String,
+      required: false,
+      minlength: 5,
+      maxlength: 255
+    }
+  }
   //roles: [], operations: []
 });
 
@@ -42,8 +56,12 @@ const User = mongoose.model("User", userSchema);
 
 function validateUser(user) {
   const schema = {
-    name: Joi.string()
-      .min(5)
+    firstname: Joi.string()
+      .min(2)
+      .max(255)
+      .required(),
+    lastname: Joi.string()
+      .min(2)
       .max(255)
       .required(),
     email: Joi.string()
@@ -54,7 +72,13 @@ function validateUser(user) {
     password: Joi.string()
       .min(5)
       .max(255)
-      .required()
+      .required(),
+    isAdmin: Joi.boolean(),
+    data: {
+      photoURL: Joi.string()
+        .min(5)
+        .max(255)
+    }
   };
 
   return Joi.validate(user, schema);
