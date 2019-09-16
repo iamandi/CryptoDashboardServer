@@ -255,37 +255,3 @@ const projectDashboardAppDB = {
 };
 
 module.exports = projectDashboardAppDB;
-
-/*
-mock.onGet('/api/project-dashboard-app/widgets').reply(config => {
-  return [200, projectDashboardAppDB.widgets];
-});
-
-mock
-  .onGet('/api/project-dashboard-app/widgets/XgbuVEXBU5gtSKdbQRP1Zbbby1i0')
-  .reply(config => {
-    return [200, projectDashboardAppDB.widgets];
-  });
-
-mock
-  .onGet('/api/project-dashboard-app/widgetDon/XgbuVEXBU5gtSKdbQRP1Zbbby1i0')
-  .reply(config => {
-    return [200, projectDashboardAppDB.widgets.widgetDon];
-  });
-
-mock
-  .onGet('/api/project-dashboard-app/widgetBtc/XgbuVEXBU5gtSKdbQRP1Zbbby1i0')
-  .reply(config => {
-    return [200, projectDashboardAppDB.widgets.widgetBtc];
-  });
-
-mock
-  .onGet('/api/project-dashboard-app/widgetEth/XgbuVEXBU5gtSKdbQRP1Zbbby1i0')
-  .reply(config => {
-    return [200, projectDashboardAppDB.widgets.widgetEth];
-  });
-
-mock.onGet('/api/project-dashboard-app/projects').reply(config => {
-  return [200, projectDashboardAppDB.projects];
-});
-*/
