@@ -2,7 +2,10 @@
 const auth = require("../middleware/auth");
 const jwt = require("jsonwebtoken");
 const config = require("config");
-const { User, validate } = require("../models/user");
+const {
+  User,
+  validate
+} = require("../models/user");
 const _ = require("lodash");
 const bcrypt = require("bcrypt");
 const express = require("express");
@@ -25,7 +28,9 @@ router.get("/me", auth, async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  const { error } = validate(req.body);
+  const {
+    error
+  } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
   let user = await User.findOne({
@@ -34,7 +39,7 @@ router.post("/", async (req, res) => {
   if (user) return res.status(400).send("User already registered");
 
   user = new User(
-    _.pick(req.body, ["firstname", "lastname", "email", "password", "data"])
+    _.pick(req.body, ["name", "email", "password", "address", "phone", "data"])
   );
   const salt = await bcrypt.genSalt(10);
   user.password = await bcrypt.hash(user.password, salt);
@@ -43,7 +48,7 @@ router.post("/", async (req, res) => {
   const token = user.generateAuthToken();
   res
     .header("x-auth-token", token)
-    .send(_.pick(user, ["_id", "firstname", "lastname", "email", "data"]));
+    .send(_.pick(user, ["_id", "name", "email", "data"]));
 });
 
 module.exports = router;
