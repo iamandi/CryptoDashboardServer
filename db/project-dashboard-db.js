@@ -1,7 +1,7 @@
 const projectDashboardAppDB = {
   widgets: {
     widgetDon: {
-      title: "Donpia",
+      title: "Donpia Wallet",
       symbol: "DON",
       icon: "don",
       balance: 634.0008,
@@ -9,7 +9,7 @@ const projectDashboardAppDB = {
       change: 2.11
     },
     widgetEth: {
-      title: "Ethereum",
+      title: "Ethereum Wallet",
       symbol: "ETH",
       icon: "eth",
       balance: 0.000379,
@@ -17,7 +17,7 @@ const projectDashboardAppDB = {
       change: 1.32
     },
     widgetBtc: {
-      title: "Bitcoin",
+      title: "Bitcoin Wallet",
       symbol: "BTC",
       icon: "btc",
       balance: 28.97376,
@@ -32,8 +32,7 @@ const projectDashboardAppDB = {
       classes: "text-yellow"
     },
     widgetCryptoUsd: {
-      rows: [
-        {
+      rows: [{
           id: 1,
           title: "Donpia",
           symbol: "DON",
@@ -65,8 +64,7 @@ const projectDashboardAppDB = {
     widgetBudgetAllocation: {
       title: "Budget Details",
       table: {
-        columns: [
-          {
+        columns: [{
             id: "cryptocurrency",
             title: "Cryptocurrency"
           },
@@ -79,8 +77,7 @@ const projectDashboardAppDB = {
             title: "Balance($)"
           }
         ],
-        rows: [
-          {
+        rows: [{
             id: 1,
             title: "Donpia",
             symbol: "DON",
@@ -136,8 +133,7 @@ const projectDashboardAppDB = {
       title: "Crypto Allocation",
       mainChart: {
         labels: ["DON", "BTC", "ETH"],
-        datasets: [
-          {
+        datasets: [{
             id: 1,
             title: "Donpia",
             symbol: "DON",
@@ -192,8 +188,7 @@ const projectDashboardAppDB = {
     widgetLine: {
       title: "Crypto Allocation",
       labels: ["January", "February", "March", "April", "May", "June", "July"],
-      mainChart: [
-        {
+      mainChart: [{
           label: "DON",
           borderColor: "red",
           pointHoverBackgroundColor: "red",
@@ -234,8 +229,7 @@ const projectDashboardAppDB = {
       }
     }
   },
-  projects: [
-    {
+  projects: [{
       id: 1,
       name: "ACME Corp. Backend App"
     },
