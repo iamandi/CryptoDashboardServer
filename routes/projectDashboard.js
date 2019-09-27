@@ -20,7 +20,7 @@ router.get("/btc/:id", async (req, res) => {
   res.send(projectDashboardAppDB.widgets.widgetBtc);
 });
 
-router.get("/etc/:id", async (req, res) => {
+router.get("/eth/:id", async (req, res) => {
   res.send(projectDashboardAppDB.widgets.widgetEth);
 });
 
