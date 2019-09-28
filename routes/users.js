@@ -27,6 +27,7 @@ router.get("/me", auth, async (req, res) => {
   res.send(user);
 });
 
+// User registration
 router.post("/", async (req, res) => {
   const {
     error

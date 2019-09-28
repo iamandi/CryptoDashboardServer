@@ -1,7 +1,9 @@
 "use strict";
 const jwt = require("jsonwebtoken");
 const config = require("config");
-const { User } = require("../models/user");
+const {
+  User
+} = require("../models/user");
 const auth = require("../middleware/auth");
 const _ = require("lodash");
 const Joi = require("@hapi/joi");
@@ -10,7 +12,9 @@ const express = require("express");
 const router = express.Router();
 
 router.post("/", async (req, res) => {
-  const { error } = validate(req.body);
+  const {
+    error
+  } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
   let user = await User.findOne({
@@ -29,6 +33,7 @@ router.post("/", async (req, res) => {
   });
 });
 
+// REMOVE THIS - CHECK OUT users.js /me route
 router.get("/access-token", auth, async (req, res) => {
   console.table(req.user);
 

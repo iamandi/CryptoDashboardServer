@@ -1,10 +1,14 @@
-const { Ethereum, validate } = require("../models/ethereum");
+const {
+  Ethereum,
+  validate
+} = require("../models/ethereum");
 const auth = require("../middleware/auth");
+const auth0Jwt = require('../middleware/auth0.js');
 const express = require("express");
 const router = express.Router();
 
 // all genres
-router.get("/", async (req, res) => {
+router.get("/", auth0Jwt, async (req, res) => {
   let ethereums;
   const userId = req.query.user_id;
   if (userId)
@@ -13,9 +17,9 @@ router.get("/", async (req, res) => {
     }).select("-user.private_key -__v -_id");
   else
     ethereums = await Ethereum.find()
-      .sort("name")
-      .select("-user.private_key -__v -_id")
-      .limit(100);
+    .sort("name")
+    .select("-user.private_key -__v -_id")
+    .limit(100);
 
   res.send(ethereums);
 });
@@ -31,7 +35,9 @@ router.get("/:id", async (req, res) => {
 
 // add ethereum
 router.post("/", async (req, res) => {
-  const { error } = validate(req.body);
+  const {
+    error
+  } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
   let ethereum = new Ethereum({
@@ -46,10 +52,12 @@ router.post("/", async (req, res) => {
 
 // update ethereum blance
 router.put("/", async (req, res) => {
-  const { error } = validate(req.body);
+  const {
+    error
+  } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
-  
+
 
   let ethereum = new Ethereum({
     name: req.body.name,
