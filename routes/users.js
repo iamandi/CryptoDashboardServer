@@ -1,28 +1,20 @@
 "use strict";
-const auth = require("../middleware/auth");
-const jwt = require("jsonwebtoken");
 const config = require("config");
 const {
   User,
   validate
 } = require("../models/user");
-const _ = require("lodash");
-const bcrypt = require("bcrypt");
+const auth0Jwt = require('../middleware/auth0.js');
+const _ = require('lodash');
 const express = require("express");
 const router = express.Router();
 
-router.get("/me", auth, async (req, res) => {
-  const userFrmDb = await User.findById(req.user._id).select("-password");
-  const role = userFrmDb.isAdmin ? "admin" : "staff";
 
-  const user = {
-    _id: userFrmDb._id,
-    email: userFrmDb.email,
-    firstname: userFrmDb.firstname,
-    lastname: userFrmDb.lastname,
-    role,
-    data: userFrmDb.data
-  };
+router.get("/me", auth0Jwt, async (req, res) => {
+  const userId = req.user.userId;
+  const user = await User.findOne({
+    userId
+  });
 
   res.send(user);
 });
@@ -34,22 +26,20 @@ router.post("/", async (req, res) => {
   } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
+  const userId = req.body.userId;
+
   let user = await User.findOne({
-    email: req.body.email
+    userId
   });
   if (user) return res.status(400).send("User already registered");
 
   user = new User(
-    _.pick(req.body, ["name", "email", "password", "address", "phone", "data"])
+    _.pick(req.body, ["userId", "isEmailVerified", "data"])
   );
-  const salt = await bcrypt.genSalt(10);
-  user.password = await bcrypt.hash(user.password, salt);
+
   await user.save();
 
-  const token = user.generateAuthToken();
-  res
-    .header("x-auth-token", token)
-    .send(_.pick(user, ["_id", "name", "email", "data"]));
+  res.send(_.pick(user, ["_id", "userId", "isEmailVerified", "data"]));
 });
 
 module.exports = router;

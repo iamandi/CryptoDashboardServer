@@ -9,6 +9,7 @@ const router = express.Router();
 
 // all genres
 router.get("/", auth0Jwt, async (req, res) => {
+  console.log(req.userId);
   let ethereums;
   const userId = req.query.user_id;
   if (userId)
@@ -17,14 +18,14 @@ router.get("/", auth0Jwt, async (req, res) => {
     }).select("-user.private_key -__v -_id");
   else
     ethereums = await Ethereum.find()
-    .sort("name")
-    .select("-user.private_key -__v -_id")
-    .limit(100);
+      .sort("name")
+      .select("-user.private_key -__v -_id")
+      .limit(100);
 
   res.send(ethereums);
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", auth0Jwt, async (req, res) => {
   const id = req.params.id;
 
   const ethereum = await Ethereum.findById(id);
@@ -56,8 +57,6 @@ router.put("/", async (req, res) => {
     error
   } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
-
-
 
   let ethereum = new Ethereum({
     name: req.body.name,
