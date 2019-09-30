@@ -1,7 +1,7 @@
 const projectDashboardAppDB = {
   widgets: {
     widgetDon: {
-      title: "Donpia Wallet",
+      name: "Donpia Wallet",
       ticker: "DON",
       icon: "don",
       balance: 634.0008,
@@ -9,7 +9,7 @@ const projectDashboardAppDB = {
       change: 2.11
     },
     widgetEth: {
-      title: "Ethereum Wallet",
+      name: "Ethereum Wallet",
       ticker: "ETH",
       icon: "eth",
       balance: 1,
@@ -17,7 +17,7 @@ const projectDashboardAppDB = {
       change: 1.32
     },
     widgetBtc: {
-      title: "Bitcoin Wallet",
+      name: "Bitcoin Wallet",
       ticker: "BTC",
       icon: "btc",
       balance: 28.97376,
@@ -25,7 +25,7 @@ const projectDashboardAppDB = {
       change: -7.01
     },
     widgetUnia: {
-      title: "UNIA points",
+      name: "UNIA points",
       ticker: "UNIA",
       icon: "unia",
       balance: 15000,

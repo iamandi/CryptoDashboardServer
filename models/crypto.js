@@ -49,12 +49,12 @@ const cryptoSchema = new mongoose.Schema({
         required: true,
         default: Date.now
       },
-      balance_crypto: {
+      balanceCrypto: {
         type: Number,
         min: 0,
         required: true
       },
-      balance_usd: {
+      balanceUsd: {
         type: Number,
         min: 0,
         required: true
@@ -98,12 +98,12 @@ const cryptoSchema = new mongoose.Schema({
         required: true,
         default: Date.now
       },
-      balance_crypto: {
+      balanceCrypto: {
         type: Number,
         min: 0,
         required: true
       },
-      balance_usd: {
+      balanceUsd: {
         type: Number,
         min: 0,
         required: true
@@ -147,12 +147,12 @@ const cryptoSchema = new mongoose.Schema({
         required: true,
         default: Date.now
       },
-      balance_crypto: {
+      balanceCrypto: {
         type: Number,
         min: 0,
         required: true
       },
-      balance_usd: {
+      balanceUsd: {
         type: Number,
         min: 0,
         required: true
@@ -187,11 +187,11 @@ function validateCrypto(crypto) {
         date_updated: Joi.date()
           .description("Ethereum balance update date")
           .default(Date.now()),
-        balance_crypto: Joi.number()
+        balanceCrypto: Joi.number()
           .precision(18)
           .min(0)
           .required(),
-        balance_usd: Joi.number()
+        balanceUsd: Joi.number()
           .precision(2)
           .min(0)
           .required(),
@@ -214,11 +214,11 @@ function validateCrypto(crypto) {
         date_updated: Joi.date()
           .description("Bitcoin balance update date")
           .default(Date.now()),
-        balance_crypto: Joi.number()
+        balanceCrypto: Joi.number()
           .precision(18)
           .min(0)
           .required(),
-        balance_usd: Joi.number()
+        balanceUsd: Joi.number()
           .precision(2)
           .min(0)
           .required(),
@@ -242,11 +242,11 @@ function validateCrypto(crypto) {
         date_updated: Joi.date()
           .description("Donpia balance update date")
           .default(Date.now()),
-        balance_crypto: Joi.number()
+        balanceCrypto: Joi.number()
           .precision(18)
           .min(0)
           .required(),
-        balance_usd: Joi.number()
+        balanceUsd: Joi.number()
           .precision(2)
           .min(0)
           .required(),

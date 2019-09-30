@@ -9,9 +9,7 @@ const router = express.Router();
 router.get("/", [auth0Jwt, createUserIfAbsent], async (req, res) => {
   const isEmailVerified = req.user.isEmailVerified;
   const crypto = await req.user.crypto;
-
-  console.log("crypto.bitcoin = ", crypto.bitcoin);
-
+  
   projectDashboardAppDB.widgets.widgetBtc = crypto.bitcoin;
   projectDashboardAppDB.widgets.widgetEth = crypto.ethereum;
   projectDashboardAppDB.widgets.widgetDon = crypto.donpia;

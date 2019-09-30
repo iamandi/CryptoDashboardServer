@@ -24,8 +24,8 @@ async function createUserIfAbsent(userId) {
         public_key: "ETH-public-adsadsasdas",
         address: "0xa589D2e07064f767f12Daa23d75880aC10Cbe0ec",
         balances: {
-          balance_crypto: 0,
-          balance_usd: 0,
+          balanceCrypto: 0,
+          balanceUsd: 0,
           change: 0
         }
       },
@@ -34,8 +34,8 @@ async function createUserIfAbsent(userId) {
         public_key: "BTC-public-adsadsasdas",
         address: "BTC-address-adsadsasdas",
         balances: {
-          balance_crypto: 0,
-          balance_usd: 0,
+          balanceCrypto: 0,
+          balanceUsd: 0,
           change: 0
         }
       },
@@ -44,8 +44,8 @@ async function createUserIfAbsent(userId) {
         public_key: "DON-public-adsadsasdas",
         address: "0xa589D2e07064f767f12Daa23d75880aC10Cbe0ec",
         balances: {
-          balance_crypto: 0,
-          balance_usd: 0,
+          balanceCrypto: 0,
+          balanceUsd: 0,
           change: 0
         }
       }
