@@ -1,22 +1,21 @@
 const mongoose = require("mongoose");
 const Joi = require("@hapi/joi");
 Joi.objectId = require("joi-objectid")(Joi);
-require("mongoose-type-ethereum-address");
 
 function arrayLimit(val) {
   const arrayLimitConstant = 10;
   return val.length <= arrayLimitConstant;
 }
 
-const ethereumSchema = new mongoose.Schema({
+const donpiaSchema = new mongoose.Schema({
   name: {
     type: String,
-    enum: ["Ethereum"],
+    enum: ["Donpia"],
     required: true
   },
   ticker: {
     type: String,
-    enum: ["ETH"],
+    enum: ["DON"],
     required: true
   },
   user: {
@@ -32,7 +31,7 @@ const ethereumSchema = new mongoose.Schema({
       maxlength: 2048
     },
     public_address: {
-      type: mongoose.Schema.Types.EthereumAddress,
+      type: String,
       required: true
     },
     balances: {
@@ -55,15 +54,15 @@ const ethereumSchema = new mongoose.Schema({
   }
 });
 
-const Ethereum = mongoose.model("Ethereum", ethereumSchema);
+const Donpia = mongoose.model("Donpia", donpiaSchema);
 
-function validateEthereum(ethereum) {
+function validateDonpia(donpia) {
   const schema = {
     name: Joi.string()
-      .default("Ethereum")
+      .default("Donpia")
       .required(),
     ticker: Joi.string()
-      .default("ETH")
+      .default("DON")
       .required(),
 
     user: {
@@ -76,7 +75,7 @@ function validateEthereum(ethereum) {
 
       balances: {
         date_updated: Joi.date()
-          .description("Ethereum balance update date")
+          .description("Donpia balance update date")
           .default(Date.now()),
         balance_crypto: Joi.number()
           .precision(18)
@@ -90,9 +89,9 @@ function validateEthereum(ethereum) {
     }
   };
 
-  return Joi.validate(ethereum, schema);
+  return Joi.validate(donpia, schema);
 }
 
-exports.Ethereum = Ethereum;
-exports.ethereumSchema = ethereumSchema;
-exports.validate = validateEthereum;
+exports.Donpia = Donpia;
+exports.donpiaSchema = donpiaSchema;
+exports.validate = validateDonpia;

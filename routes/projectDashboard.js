@@ -1,25 +1,25 @@
 const projectDashboardAppDB = require("../db/project-dashboard-db");
-const auth = require("../middleware/auth");
-const admin = require("../middleware/admin");
-const auth0Jwt = require('../middleware/auth0');
-const {
-  User,
-  validate
-} = require("../models/user");
+const auth0Jwt = require("../middleware/auth0");
+const { Ethereum, validate } = require("../models/ethereum");
 const _ = require("lodash");
+const createUserIfAbsent = require("../middleware/createUserIfAbsent");
 const express = require("express");
 const router = express.Router();
 
-router.get("/", auth0Jwt, async (req, res) => {
+router.get("/", [auth0Jwt, createUserIfAbsent], async (req, res) => {
+  const isEmailVerified = req.user.isEmailVerified;
+  const crypto = await req.user.crypto;
+
+  console.log("crypto.bitcoin = ", crypto.bitcoin);
+
+  projectDashboardAppDB.widgets.widgetBtc = crypto.bitcoin;
+  projectDashboardAppDB.widgets.widgetEth = crypto.ethereum;
+  projectDashboardAppDB.widgets.widgetDon = crypto.donpia;
+
   res.send(projectDashboardAppDB.widgets);
 });
 
 router.get("/:id", auth0Jwt, async (req, res) => {
-  const userId = req.userId;
-  console.log({userId});
-
-
-
   res.send(projectDashboardAppDB.widgets);
 });
 
