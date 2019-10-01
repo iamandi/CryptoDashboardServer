@@ -14,7 +14,66 @@ const cryptoSchema = new mongoose.Schema({
     ref: "User",
     required: true
   },
+  unia: {
+    rank: {
+      type: Number,
+      default: 0
+    },
+    name: {
+      type: String,
+      default: "UNIA points Wallet"
+    },
+    ticker: {
+      type: String,
+      default: "UNIA"
+    },
+    classes: {
+      type: String,
+      default: "yellow"
+    },
+    private_key: {
+      type: String,
+      required: true,
+      minlength: 5,
+      maxlength: 2048
+    },
+    public_key: {
+      type: String,
+      required: true,
+      minlength: 5,
+      maxlength: 2048
+    },
+    address: {
+      type: mongoose.Schema.Types.EthereumAddress,
+      required: true
+    },
+    balances: [{
+      date_updated: {
+        type: Date,
+        required: true,
+        default: Date.now
+      },
+      balanceCrypto: {
+        type: Number,
+        min: 0,
+        required: true
+      },
+      balanceUsd: {
+        type: Number,
+        min: 0,
+        required: true
+      },
+      change: {
+        type: Number,
+        required: true
+      }
+    }]
+  },
   ethereum: {
+    rank: {
+      type: Number,
+      default: 3
+    },
     name: {
       type: String,
       default: "Ethereum Wallet"
@@ -25,7 +84,7 @@ const cryptoSchema = new mongoose.Schema({
     },
     classes: {
       type: String,
-      default: "text-green"
+      default: "green"
     },
     private_key: {
       type: String,
@@ -43,7 +102,7 @@ const cryptoSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.EthereumAddress,
       required: true
     },
-    balances: {
+    balances: [{
       date_updated: {
         type: Date,
         required: true,
@@ -63,9 +122,13 @@ const cryptoSchema = new mongoose.Schema({
         type: Number,
         required: true
       }
-    }
+    }]
   },
   bitcoin: {
+    rank: {
+      type: Number,
+      default: 2
+    },
     name: {
       type: String,
       default: "Bitcoin Wallet"
@@ -76,7 +139,7 @@ const cryptoSchema = new mongoose.Schema({
     },
     classes: {
       type: String,
-      default: "text-orange"
+      default: "orange"
     },
     private_key: {
       type: String,
@@ -92,7 +155,7 @@ const cryptoSchema = new mongoose.Schema({
       type: String,
       required: true
     },
-    balances: {
+    balances: [{
       date_updated: {
         type: Date,
         required: true,
@@ -112,9 +175,13 @@ const cryptoSchema = new mongoose.Schema({
         type: Number,
         required: true
       }
-    }
+    }]
   },
   donpia: {
+    rank: {
+      type: Number,
+      default: 1
+    },
     name: {
       type: String,
       default: "Donpia Wallet"
@@ -125,7 +192,7 @@ const cryptoSchema = new mongoose.Schema({
     },
     classes: {
       type: String,
-      default: "text-red"
+      default: "red"
     },
     private_key: {
       type: String,
@@ -141,7 +208,7 @@ const cryptoSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.EthereumAddress,
       required: true
     },
-    balances: {
+    balances: [{
       date_updated: {
         type: Date,
         required: true,
@@ -161,7 +228,7 @@ const cryptoSchema = new mongoose.Schema({
         type: Number,
         required: true
       }
-    }
+    }]
   }
 });
 
@@ -183,7 +250,7 @@ function validateCrypto(crypto) {
         .alphanum()
         .length(42)
         .required(),
-      balances: {
+      balances: [{
         date_updated: Joi.date()
           .description("Ethereum balance update date")
           .default(Date.now()),
@@ -196,7 +263,7 @@ function validateCrypto(crypto) {
           .min(0)
           .required(),
         change: Joi.number().required()
-      }
+      }]
     },
     bitcoin: {
       private_key: Joi.string()
@@ -210,7 +277,7 @@ function validateCrypto(crypto) {
       address: Joi.string()
         .alphanum()
         .required(),
-      balances: {
+      balances: [{
         date_updated: Joi.date()
           .description("Bitcoin balance update date")
           .default(Date.now()),
@@ -223,7 +290,7 @@ function validateCrypto(crypto) {
           .min(0)
           .required(),
         change: Joi.number().required()
-      }
+      }]
     },
     donpia: {
       private_key: Joi.string()
@@ -238,7 +305,7 @@ function validateCrypto(crypto) {
         .alphanum()
         .length(42)
         .required(),
-      balances: {
+      balances: [{
         date_updated: Joi.date()
           .description("Donpia balance update date")
           .default(Date.now()),
@@ -251,7 +318,35 @@ function validateCrypto(crypto) {
           .min(0)
           .required(),
         change: Joi.number().required()
-      }
+      }]
+    },
+    unia: {
+      private_key: Joi.string()
+        .min(5)
+        .max(2048)
+        .required(),
+      public_key: Joi.string()
+        .min(5)
+        .max(2048)
+        .required(),
+      address: Joi.string()
+        .alphanum()
+        .length(42)
+        .required(),
+      balances: [{
+        date_updated: Joi.date()
+          .description("Unia balance update date")
+          .default(Date.now()),
+        balanceCrypto: Joi.number()
+          .precision(18)
+          .min(0)
+          .required(),
+        balanceUsd: Joi.number()
+          .precision(2)
+          .min(0)
+          .required(),
+        change: Joi.number().required()
+      }]
     }
   };
 

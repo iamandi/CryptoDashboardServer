@@ -1,23 +1,37 @@
 const projectDashboardAppDB = require("../db/project-dashboard-db");
 const auth0Jwt = require("../middleware/auth0");
-const { Ethereum, validate } = require("../models/ethereum");
+const profileToken = require("../middleware/profile");
 const _ = require("lodash");
 const createUserIfAbsent = require("../middleware/createUserIfAbsent");
 const express = require("express");
 const router = express.Router();
 
 router.get("/", [auth0Jwt, createUserIfAbsent], async (req, res) => {
-  const isEmailVerified = req.user.isEmailVerified;
-  const crypto = await req.user.crypto;
-  
-  projectDashboardAppDB.widgets.widgetBtc = crypto.bitcoin;
-  projectDashboardAppDB.widgets.widgetEth = crypto.ethereum;
-  projectDashboardAppDB.widgets.widgetDon = crypto.donpia;
+  const {
+    unia,
+    bitcoin,
+    ethereum,
+    donpia
+  } = await req.user.crypto;
 
-  res.send(projectDashboardAppDB.widgets);
+  const widgets = projectDashboardAppDB.widgets;
+
+  const widgetLine = widgets.widgetLine;
+  const widgetPie = widgets.widgetPie;
+  const widgetBudgetAllocation = widgets.widgetBudgetAllocation;
+
+  const result = {
+    data: [unia, donpia, bitcoin, ethereum],
+    widgetLine,
+    widgetCryptoPrices: [],
+    widgetPie,
+    widgetBudgetAllocation
+  };
+
+  res.send(result);
 });
 
-router.get("/:id", auth0Jwt, async (req, res) => {
+router.get("/:id", profileToken, async (req, res) => {
   res.send(projectDashboardAppDB.widgets);
 });
 

@@ -5,7 +5,6 @@ const faq = require("../routes/faq");
 const affiliateProgram = require("../routes/affiliateProgram");
 const accessControlHeaders = require("../middleware/routeLogger");
 const users = require("../routes/users");
-const ethreumAccounts = require("../routes/ethreumAccounts");
 const auth = require("../routes/auth");
 const cors = require("cors");
 const express = require("express");
@@ -21,7 +20,6 @@ const routes = app => {
   app.use("/api/send-receive-app", sendReceive);
   app.use("/api/faq", faq);
   app.use("/api/users", users);
-  app.use("/api/ethereum-accounts", ethreumAccounts);
 };
 
 module.exports = routes;
