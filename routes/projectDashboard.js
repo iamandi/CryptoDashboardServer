@@ -7,21 +7,15 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/", [auth0Jwt, createUserIfAbsent], async (req, res) => {
-  const {
-    unia,
-    bitcoin,
-    ethereum,
-    donpia
-  } = await req.user.crypto;
+  const crypto = req.user.crypto;
 
   const widgets = projectDashboardAppDB.widgets;
-
   const widgetLine = widgets.widgetLine;
   const widgetPie = widgets.widgetPie;
   const widgetBudgetAllocation = widgets.widgetBudgetAllocation;
 
   const result = {
-    data: [unia, donpia, bitcoin, ethereum],
+    data: crypto,
     widgetLine,
     widgetCryptoPrices: [],
     widgetPie,

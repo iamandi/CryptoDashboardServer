@@ -22,46 +22,53 @@ async function createUserIfAbsent(userId) {
         private_key: "ETH-private-adsadsasdas",
         public_key: "ETH-public-adsadsasdas",
         address: "0xa589D2e07064f767f12Daa23d75880aC10Cbe0ec",
-        balances: [{
-          balanceCrypto: 0,
-          balanceUsd: 0,
-          change: 0
-        }]
+        balances: [
+          {
+            balanceCrypto: 0,
+            balanceUsd: 0,
+            change: 0
+          }
+        ]
       },
       bitcoin: {
         private_key: "BTC-private-adsadsasdas",
         public_key: "BTC-public-adsadsasdas",
         address: "BTC-address-adsadsasdas",
-        balances: [{
-          balanceCrypto: 0,
-          balanceUsd: 0,
-          change: 0
-        }]
+        balances: [
+          {
+            balanceCrypto: 0,
+            balanceUsd: 0,
+            change: 0
+          }
+        ]
       },
       donpia: {
         private_key: "DON-private-adsadsasdas",
         public_key: "DON-public-adsadsasdas",
         address: "0xa589D2e07064f767f12Daa23d75880aC10Cbe0ec",
-        balances: [{
-          balanceCrypto: 0,
-          balanceUsd: 0,
-          change: 0
-        }]
+        balances: [
+          {
+            balanceCrypto: 0,
+            balanceUsd: 0,
+            change: 0
+          }
+        ]
       },
       unia: {
         private_key: "UNIA-private-adsadsasdas",
         public_key: "UNIA-public-adsadsasdas",
         address: "0xa589D2e07064f767f12Daa23d75880aC10Cbe0ec",
-        balances: [{
-          balanceCrypto: 5000,
-          balanceUsd: 0,
-          change: 0
-        }]
+        balances: [
+          {
+            balanceCrypto: 5000,
+            balanceUsd: 0,
+            change: 0
+          }
+        ]
       }
-
     });
 
-    crypto = await crypto.save();
+    cypto = await crypto.save();
     await user.save();
   }
 
@@ -73,14 +80,15 @@ checkUserValidityManagement = userId => {
   // also use it for isEmailVeirifed param
 };
 
-module.exports = function (req, res, next) {
+module.exports = async function(req, res, next) {
   const userId = req.user.userId;
 
-  const crypto = createUserIfAbsent(userId);
+  const { unia, bitcoin, ethereum, donpia } = await createUserIfAbsent(userId);
+  console.log({ unia });
 
   // some email not verified logic
 
-  req.user.crypto = crypto;
+  req.user.crypto = [unia, donpia, bitcoin, ethereum];
 
   next();
 };
